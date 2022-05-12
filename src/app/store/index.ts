@@ -28,7 +28,10 @@ const rootReducer = combineReducers({
   // friend: friendReducer,
 });
 
-const persistedReducer = persistReducer({ ...persistConfig }, rootReducer);
+const persistedReducer = persistReducer(
+  { ...persistConfig, blacklist: ["auth"] },
+  rootReducer
+);
 
 export const store = configureStore({
   reducer: persistedReducer,

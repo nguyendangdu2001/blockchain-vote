@@ -2,18 +2,12 @@ import { createSlice } from "@reduxjs/toolkit";
 
 export interface authState {
   isAuth: boolean;
-  token: string;
-  user: any;
-  users: any;
-  isLoading: boolean;
+  account: string;
 }
 
 const initialState: authState = {
   isAuth: false,
-  token: "",
-  user: null,
-  users: [],
-  isLoading: false,
+  account: "",
 };
 
 export const authSlice = createSlice({
@@ -26,10 +20,10 @@ export const authSlice = createSlice({
       // which detects changes to a "draft state" and produces a brand new
       // immutable state based off those changes
       state.isAuth = true;
-      state.token = action.payload?.token;
-      state.user = action.payload;
+      state.account = action.payload?.account;
+      // state.user = action.payload;
       state.isLoading = false;
-      localStorage.setItem("token-like168", action.payload?.token);
+      // localStorage.setItem("token-like168", action.payload?.token);
     },
     startLoginSession: (state, action) => {
       // Redux Toolkit allows us to write "mutating" logic in reducers. It
@@ -43,9 +37,9 @@ export const authSlice = createSlice({
     },
     logout: (state) => {
       state.isAuth = false;
-      state.token = "";
-      state.user = null;
-      localStorage.removeItem("token-like168");
+      state.account = "";
+      // state.user = null;
+      // localStorage.removeItem("token-like168");
     },
     updateToken: (state, action) => {
       state.token = action.payload?.access_token;

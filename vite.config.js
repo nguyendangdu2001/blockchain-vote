@@ -35,6 +35,7 @@
 //     },
 //   },
 // });
+import { NodeGlobalsPolyfillPlugin } from "@esbuild-plugins/node-globals-polyfill";
 import reactRefresh from "@vitejs/plugin-react-refresh";
 import eslint from "@rbnlffl/rollup-plugin-eslint";
 import { resolve } from "path";
@@ -55,9 +56,10 @@ const config = ({ command }) => ({
   build: {
     manifest: true,
   },
-  // define: {
-  //   global: "window",
-  // },
+  define: {
+    global: "window",
+    "process.env": process.env,
+  },
   resolve: {
     alias: {
       "@pages": resolve(__dirname, "./src/pages"),
@@ -76,6 +78,20 @@ const config = ({ command }) => ({
       "@redux": resolve(__dirname, "./src/redux"),
       "@icon": resolve(__dirname, "./src/common/components/icons"),
       "@defines": resolve(__dirname, "./src/defines"),
+    },
+  },
+  optimizeDeps: {
+    esbuildOptions: {
+      // Node.js global to browser globalThis
+      define: {
+        global: "globalThis",
+      },
+      // Enable esbuild polyfill plugins
+      plugins: [
+        NodeGlobalsPolyfillPlugin({
+          buffer: true,
+        }),
+      ],
     },
   },
 });

@@ -1,21 +1,27 @@
 import classNames from "classnames";
-import React, { ReactElement } from "react";
+import React, { forwardRef, ReactElement } from "react";
+// import { HashLoader } from "react-spinners";
 interface Props extends React.HTMLAttributes<HTMLButtonElement> {
   icon: ReactElement;
+  loading: boolean;
+  endIcon: ReactElement;
 }
-const IconButton = ({ icon, className, children, ...rest }: Props) => {
+const IconButton = (
+  { loading = false, icon, className, endIcon, children, ...rest }: Props,
+  ref
+) => {
   return (
     <button
-      className={classNames(
-        "flex items-center justify-center p-3 rounded-full hover:opacity-80 transition-opacity space-x-2 text-base font-semibold",
-        className
-      )}
+      ref={ref}
+      className={classNames("icon-button", className)}
       {...rest}
     >
+      {/* {loading ? <HashLoader size={18} /> : icon} */}
       {icon}
       {children && <span>{children}</span>}
+      {endIcon}
     </button>
   );
 };
 
-export default IconButton;
+export default forwardRef(IconButton);
